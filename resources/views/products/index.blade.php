@@ -24,6 +24,8 @@
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->stock }}</td>
+                        
+                        {{-- Acciones disponibles para cada producto: Ver, Editar, Eliminar --}}
                         <td>
                             <a class="btn btn-primary" href="{{ route('products.show', $product) }}" role="button">
                                 <i class="bi bi-file-text">Show</i>
@@ -44,5 +46,23 @@
             </table>
         </div>
     </div>
+
+    {{-- Si hay un mensaje en sesión, mostrar un toast (notificación flotante) --}}
+    @if (session('message'))
+        <div class="toast-container position-fixed bottom-0 start-0 p-3">
+            <div id="liveToast" class="toast {{ session('class') }}" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-body">{{ session('message')}} </div>
+            </div>
+        </div>
+
+         {{-- Script para activar el toast al cargar la página --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const toastLiveExample = document.getElementById('liveToast');
+                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+                toastBootstrap.show();
+            });
+        </script>
+    @endif
 
 </x-layout>
